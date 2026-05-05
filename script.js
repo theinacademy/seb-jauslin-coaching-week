@@ -1,35 +1,71 @@
 (function () {
-  var TARGET = new Date('2026-05-14T12:00:00Z'); // [TIME_TBD] — update to actual event time in UTC
+  'use strict';
 
-  function update() {
-    var el = document.getElementById('countdown-text');
-    if (!el) return;
+  // Founding cohort offer ends May 31, 2026 at 23:59 CEST (Europe/Zurich = UTC+2)
+  var TARGET = new Date('2026-05-31T21:59:00Z');
 
-    var now = Date.now();
-    var diff = TARGET.getTime() - now;
+  function pad(n) {
+    return String(n).padStart(2, '0');
+  }
+
+  function updateCountdowns() {
+    var now = new Date();
+    var diff = TARGET.getTime() - now.getTime();
+    var els = document.querySelectorAll('[data-countdown]');
+    if (!els.length) return;
 
     if (diff <= 0) {
-      el.parentElement.style.display = 'none';
+      els.forEach(function (el) { el.textContent = ''; });
+      var bar = document.querySelector('.announcement-bar');
+      if (bar) {
+        bar.style.display = 'none';
+        setBarOffset();
+      }
       return;
     }
 
-    var days    = Math.floor(diff / 86400000);
-    var hours   = Math.floor((diff % 86400000) / 3600000);
-    var minutes = Math.floor((diff % 3600000) / 60000);
+    var total = Math.floor(diff / 1000);
+    var d = Math.floor(total / 86400);
+    var h = Math.floor((total % 86400) / 3600);
+    var m = Math.floor((total % 3600) / 60);
+    var s = total % 60;
+    var text = d + 'd : ' + pad(h) + 'h : ' + pad(m) + 'm : ' + pad(s) + 's';
 
-    if (days >= 2) {
-      el.textContent = days + ' days to go';
-    } else if (days === 1) {
-      el.textContent = 'Tomorrow — ' + hours + 'h ' + minutes + 'm';
-    } else if (hours >= 1) {
-      el.textContent = hours + 'h ' + minutes + 'm to go';
-    } else {
-      el.textContent = minutes + ' minutes to go';
+    els.forEach(function (el) { el.textContent = text; });
+  }
+
+  function setBarOffset() {
+    var bar = document.querySelector('.announcement-bar');
+    var h = (bar && bar.style.display !== 'none') ? bar.offsetHeight : 0;
+    document.documentElement.style.setProperty('--bar-h', h + 'px');
+  }
+
+  function initBar() {
+    var bar = document.querySelector('.announcement-bar');
+    if (!bar) return;
+
+    if (localStorage.getItem('announcement-dismissed') === '1') {
+      bar.style.display = 'none';
+      setBarOffset();
+      return;
+    }
+
+    setBarOffset();
+
+    var btn = bar.querySelector('.announcement-bar__dismiss');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        bar.style.display = 'none';
+        localStorage.setItem('announcement-dismissed', '1');
+        setBarOffset();
+      });
     }
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    update();
-    setInterval(update, 60000);
+    initBar();
+    updateCountdowns();
+    setInterval(updateCountdowns, 1000);
+    window.addEventListener('resize', setBarOffset);
   });
-})();
+}());
