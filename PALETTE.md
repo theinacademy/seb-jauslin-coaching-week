@@ -60,3 +60,20 @@ White sections use a repeating subtle grid PNG:
 ## Max Content Width
 
 `1100px` — approximated from Divi row max-width observed as `1780px` header; content rows tighter at ~1080px.
+
+## Audrey / Happy Success layer
+
+| Token | Hex | Role |
+|---|---|---|
+| `--color-accent-secondary` | `#751CBF` | Happy Success purple |
+
+**Semantic split:**
+- Gold (`--accent-gold`) = urgency / CTA / Seb side
+- Purple (`--color-accent-secondary`) = expansion / depth / Audrey side
+
+**Where purple appears (5 spots):**
+1. Left border on manifesto blockquotes (replaces red `--accent`)
+2. H2 underline bar in `#being` section
+3. H2 underline bar in `#guides` section
+4. Arrow on 2nd shift card (`.shift-card--purple`)
+5. Footer link color for happysuccess.fr

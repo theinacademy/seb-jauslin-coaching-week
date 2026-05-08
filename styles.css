@@ -9,6 +9,7 @@
   --accent:       #FF5757;
   --accent-dark:  #C21A1A;
   --accent-gold:  #C4943A;
+  --color-accent-secondary: #751CBF;
   --dark:         #111111;
   --border:       #D4D1D7;
   --shadow:       0px 17px 117px rgba(0, 0, 0, 0.25);
@@ -677,6 +678,36 @@ body {
 }
 
 /* ===========================
+   DUAL BRAND LOCKUP
+   =========================== */
+.dual-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.dual-brand__sep {
+  width: 1px;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.dual-brand__seb,
+.dual-brand__happy {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .dual-brand { gap: 10px; }
+  .dual-brand__seb,
+  .dual-brand__happy { height: 28px; }
+}
+
+/* ===========================
    LANGUAGE SWITCHER
    =========================== */
 .lang-switcher {
@@ -796,7 +827,7 @@ body {
   font-weight: 300;
   line-height: 1.75;
   font-style: italic;
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--color-accent-secondary);
   padding-left: 24px;
   margin: 0 0 28px;
 }
@@ -876,9 +907,13 @@ body {
 }
 
 .shift-card__arrow {
-  color: var(--accent);
+  color: var(--accent-gold);
   font-size: 22px;
   font-weight: 300;
+}
+
+.shift-card--purple .shift-card__arrow {
+  color: var(--color-accent-secondary);
 }
 
 .shift-card p {
@@ -1209,4 +1244,25 @@ body {
 
 .site-footer__copy a:hover {
   color: var(--accent-dark);
+}
+
+/* ===========================
+   HAPPY SUCCESS PURPLE ACCENTS
+   =========================== */
+#being .section__header h2::after,
+#guides .section__header h2::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: var(--color-accent-secondary);
+  margin-top: 10px;
+}
+
+.site-footer__copy a[href*="happysuccess"] {
+  color: var(--color-accent-secondary);
+}
+
+.site-footer__copy a[href*="happysuccess"]:hover {
+  color: #5a1494;
 }
