@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# Local secrets / env
+.env
+.env.*
+
+# Deployment tool cache (created by FTP-Deploy-Action on local runs)
+.ftp-deploy-sync-state.json
